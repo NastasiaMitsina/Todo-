@@ -7,9 +7,9 @@ import { AppHeader } from './components/AppHeader'
 
 const App = () => {
    const todos = [
-     {label: 'Drink coffee', important: false},
-     {label: 'Build an awesome App', important: true},
-     {label: 'Wash th dishes', important: false},
+     {label: 'Drink coffee', important: false, id: 1},
+     {label: 'Build an awesome App', important: true, id: 2},
+     {label: 'Wash th dishes', important: false, id: 3},
    ]
 
   return (
