@@ -12,11 +12,20 @@ export class App extends Component {
     super();
 
     this.maxId = 100;
+    this.createTodoItem = (label) => {
+      return {
+        label,
+        important: false,
+        done: false,
+        id: this.maxId++
+      }
+    }
+    
     this.state = {
       todos: [
-        {label: 'Drink coffee', important: false, id: 1},
-        {label: 'Build an awesome App', important: true, id: 2},
-        {label: 'Wash the dishes', important: false, id: 3},
+        this.createTodoItem('Drink coffee'),
+        this.createTodoItem('Build an awesome App'),
+        this.createTodoItem('Wash the dishes')
       ]
     };
 
@@ -33,11 +42,7 @@ export class App extends Component {
       })
     }
     this.onAddToDo = (text) => {
-      const newItem = {
-        label: text,
-        important: false,
-        id: this.maxId++
-      }
+      const newItem = this.createTodoItem(text);
 
       this.setState(( { todos } ) => {
         const newArray = [
@@ -50,7 +55,22 @@ export class App extends Component {
       })
     }
     this.onToogleDone = (id) => {
-      console.log('Done', id)
+      this.setState(( { todos } ) => {
+        const index = todos.findIndex((el) => el.id === id);
+        const copyArr = todos[index];
+        const newItem = {
+          ...copyArr,
+          done: !copyArr.done
+        }
+        const newArr = [
+          ...todos.slice(0, index),
+          newItem,
+          ...todos.slice(index + 1)
+        ]
+        return {
+          todos: newArr
+        }
+      })
     }
     this.onToogleImportant = (id) => {
       console.log('Important', id)
@@ -58,9 +78,12 @@ export class App extends Component {
   }
 
   render() {
+    let countDone = this.state.todos.filter((el) => el.done === true).length;
+    let countTodo = this.state.todos.length - countDone;
+
     return (
       <div className="todo-app">
-        <AppHeader toDo={1} done={3} />
+        <AppHeader toDo={countTodo} done={countDone} />
         <div className="top-panel d-flex">
           <SearchPanel />
           <ItemStatusFilter />
