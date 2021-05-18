@@ -54,32 +54,40 @@ export class App extends Component {
         }
       })
     }
+    this.onToogleProp = (arr, id, propName) => {
+      const index = arr.findIndex((el) => el.id === id);
+      const copyArr = arr[index];
+      const newItem = {
+        ...copyArr,
+        [propName]: !copyArr[propName]
+      };
+      return [
+        ...arr.slice(0, index),
+        newItem,
+        ...arr.slice(index + 1)
+      ]
+    }; 
+
     this.onToogleDone = (id) => {
       this.setState(( { todos } ) => {
-        const index = todos.findIndex((el) => el.id === id);
-        const copyArr = todos[index];
-        const newItem = {
-          ...copyArr,
-          done: !copyArr.done
-        }
-        const newArr = [
-          ...todos.slice(0, index),
-          newItem,
-          ...todos.slice(index + 1)
-        ]
         return {
-          todos: newArr
+          todos: this.onToogleProp(todos, id, 'done')
         }
       })
     }
     this.onToogleImportant = (id) => {
-      console.log('Important', id)
+      this.setState(( { todos } ) => {
+        return {
+          todos: this.onToogleProp(todos, id, 'important')
+        }
+      })
     }
   }
 
   render() {
-    let countDone = this.state.todos.filter((el) => el.done === true).length;
-    let countTodo = this.state.todos.length - countDone;
+    const { todos } = this.state;
+    let countDone = todos.filter((el) => el.done === true).length;
+    let countTodo = todos.length - countDone;
 
     return (
       <div className="todo-app">
@@ -89,7 +97,7 @@ export class App extends Component {
           <ItemStatusFilter />
         </div>
         <TodoList 
-          plans={this.state.todos}
+          plans={todos}
           onDeleted={this.deleteItem}
           onToogleImportant={this.onToogleImportant}
           onToogleDone={this.onToogleDone}
