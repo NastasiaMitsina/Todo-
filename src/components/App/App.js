@@ -49,6 +49,12 @@ export class App extends Component {
         }
       })
     }
+    this.onToogleDone = (id) => {
+      console.log('Done', id)
+    }
+    this.onToogleImportant = (id) => {
+      console.log('Important', id)
+    }
   }
 
   render() {
@@ -62,6 +68,8 @@ export class App extends Component {
         <TodoList 
           plans={this.state.todos}
           onDeleted={this.deleteItem}
+          onToogleImportant={this.onToogleImportant}
+          onToogleDone={this.onToogleDone}
         />
         <AddItem onAddToDo={this.onAddToDo}/>
       </div>
