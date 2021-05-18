@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './TodoListItem.css';
 
-export const TodoListItem = ( { label, important = false } ) => {
+
+export class TodoListItem extends Component {
+
+  render() {
+    const { label, important = false } = this.props;
+
     const style = {
-        color: important ? 'steelblue' : 'black',
-        fontWeight: important ? 'bold' : 'normal'
+      color: important ? 'steelblue' : 'black',
+      fontWeight: important ? 'bold' : 'normal'
     }
     return (
         <span className="todo-list-item">
@@ -25,4 +30,5 @@ export const TodoListItem = ( { label, important = false } ) => {
       </button>
     </span>
     );
+  }
 };
