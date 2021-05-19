@@ -17,6 +17,9 @@ export class AddItem extends Component {
         this.onSubmit = (event) => {
             event.preventDefault();
             this.props.onAddToDo(this.state.label)
+            this.setState({
+                label: ''
+            })
         }
     }
 
@@ -27,6 +30,7 @@ export class AddItem extends Component {
                        className='form-control' 
                        placeholder='What needs to be done'
                        onChange={this.onLabelChange}
+                       value={this.state.label}
                 />
                 <button className='btn btn-outline-secondary'
                         onClick={() => this.onSubmit}>
