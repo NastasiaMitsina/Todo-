@@ -6,7 +6,7 @@ export class AddItem extends Component {
         super();
 
         this.state = {
-            label: ''
+            label: '',
         }
         
         this.onLabelChange = (event) => {
